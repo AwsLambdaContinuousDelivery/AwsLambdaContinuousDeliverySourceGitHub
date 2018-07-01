@@ -1,7 +1,7 @@
 from troposphere import Template, Sub, Parameter, Ref
 from troposphere.codepipeline import ( Stages
                                      , Actions
-                                     , ActionTypeID
+                                     , ActionTypeId
                                      , OutputArtifacts
                                      )
 
@@ -31,7 +31,7 @@ def getGitHub(t: Template, outputfiles: str) -> Stages:
              , Type="String"
              ) 
     )
-  actionId = ActionTypeID( Category = "Source"
+  actionId = ActionTypeId( Category = "Source"
                          , Owner = "ThirdParty"
                          , Version = "1"
                          , Provider = "GitHub"
@@ -42,6 +42,7 @@ def getGitHub(t: Template, outputfiles: str) -> Stages:
                                     , "Repo" : Ref(repo)
                                     , "Branch" : Ref(branch)
                                     , "OAuthToken": Ref(branch)
+                                    , "PollForSourceChanges": "true"
                                     }
                   , OutputArtifacts = [OutputArtifacts( Name = outputfiles)]
                   , RunOrder = "1"
